@@ -1,6 +1,6 @@
 let height = 400
 let width = 600
-let n_balls = 200
+let n_balls = 500
 
 var canvas = document.querySelector("canvas");
 canvas.height = height;
@@ -15,15 +15,15 @@ function randomNumber(start, end) {
 
 class Ball {
     constructor() {
-        this.radius = 5;
-        this.speed = Math.random() * 1.0 + 0.0;
+        this.radius = 3;
+        this.speed = Math.random() * 0.5 + 0.0;
         this.direction = Math.random() * Math.PI * 2;
         this.x = randomNumber(10, width - 10);
         this.y = randomNumber(10, height - 10);
         this.dx = Math.cos(this.direction) * this.speed
         this.dy = Math.sin(this.direction) * this.speed
         this.state = "suceptible"
-        this.color = "orange";
+        this.color = "#cccccc";
     }
     draw() {
         context.fillStyle = this.color;
