@@ -1,1 +1,1 @@
-View the website by going to [drbenvincent.github.io/javascript-fun](drbenvincent.github.io/javascript-fun)
+View the website by going to [https://drbenvincent.github.io/javascript-fun](https://drbenvincent.github.io/javascript-fun)
