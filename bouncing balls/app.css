@@ -33,6 +33,10 @@ a{
     color: #1955a5;
 }
 
+.message{
+    text-align: center;
+}
+
 .byline{
     font-family: 'Noto Sans TC', 'sans-serif';
     margin-top: 40px;

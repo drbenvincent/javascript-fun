@@ -9,7 +9,7 @@ class Ball {
         this.color = "#008000";
         this.direction = Math.random() * Math.PI * 2;
         this.radius = radius;
-        this.speed = Math.random() * 1 + 0.1;
+        this.speed = Math.random() * 0.5 + 0.1;
         this.x = x;
         this.y = y;
     }
@@ -25,6 +25,8 @@ class Ball {
     }
 }
 
+// get 
+//var message_thing = document.getElementsById("message_id")
 // make new ball
 var ball = new Ball(100, 100, 5);
 
@@ -35,6 +37,8 @@ var ball = new Ball(100, 100, 5);
 // context.fill();
 //ball.draw()
 
+
+
 function loop() {
     window.requestAnimationFrame(loop)
 
@@ -44,6 +48,9 @@ function loop() {
 
     ball.move()
     ball.draw()
+
+    // update text
+    document.getElementById("message_id").innerText = "ball.x = " + ball.x;
 }
 
 loop()
