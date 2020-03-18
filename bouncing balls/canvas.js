@@ -1,5 +1,6 @@
 let height = 400
 let width = 600
+let n_balls = 200
 
 var canvas = document.querySelector("canvas");
 canvas.height = height;
@@ -53,13 +54,26 @@ function loop() {
     context.canvas.height = height;
     context.canvas.width = width;
 
-    ball.move(width, height)
-    ball.draw()
+    //update balls
+    for (let index = 0; index < balls.length; index++) {
+        balls[index].move(width, height)
+
+    }
+    // draw balls
+    for (let index = 0; index < balls.length; index++) {
+        balls[index].draw()
+    }
+    // ball.move(width, height)
+    // ball.draw()
 
     // update text
-    document.getElementById("message_id").innerText = "ball.x = " + ball.x;
+    document.getElementById("message_id").innerText = "N = " + n_balls;
 }
 
-var ball = new Ball(100, 100, 5);
+// Create many balls
+var balls = new Array();
+for (let index = 0; index < n_balls; index++) {
+    balls.push(new Ball(100, 100, 5))
+}
 
 loop()
