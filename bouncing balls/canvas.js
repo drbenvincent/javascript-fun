@@ -55,21 +55,21 @@ class Ball {
         let d = Math.hypot(this.x - ball.x, this.y - ball.y)
         return Boolean(d < this.radius * 2)
     }
+    infected() {
+        ball.state = "infected"
+        ball.color = "red"
+    }
 }
 
 function interaction(ball1, ball2) {
     if (ball1.state == "infected" && ball2.state == "suceptible") {
-        infect(ball2)
+        ball2.infected()
     }
     if (ball2.state == "infected" && ball1.state == "suceptible") {
-        infect(ball1)
+        ball1.infected()
     }
 }
 
-function infect(ball) {
-    ball.state = "infected"
-    ball.color = "red"
-}
 
 function loop() {
     window.requestAnimationFrame(loop)
@@ -82,6 +82,7 @@ function loop() {
     for (let index = 0; index < balls.length; index++) {
         balls[index].move(width, height)
     }
+
     // check for intersection
     for (var i = 0; i < n_balls; i++) {
         for (var j = i + 1; j < n_balls; j++) {
@@ -91,6 +92,7 @@ function loop() {
             }
         }
     }
+
     // draw balls
     for (let index = 0; index < balls.length; index++) {
         balls[index].draw()
@@ -107,6 +109,6 @@ for (let index = 0; index < n_balls; index++) {
 }
 
 // one initial infected ball
-infect(balls[0])
+balls[0].infected()
 
 loop()
