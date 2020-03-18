@@ -23,7 +23,7 @@ class Ball {
         this.dx = Math.cos(this.direction) * this.speed
         this.dy = Math.sin(this.direction) * this.speed
         this.state = "suceptible"
-        this.color = "#008000";
+        this.color = "orange";
     }
     draw() {
         context.fillStyle = this.color;
@@ -59,6 +59,16 @@ class Ball {
         this.state = "infected"
         this.color = "red"
     }
+    progressDisease() {
+        if (this.state == "infected" && Math.random() < 0.001) {
+            console.log("recovered")
+            this.recovers()
+        }
+    }
+    recovers() {
+        this.state = "recovered"
+        this.color = "green"
+    }
 }
 
 function interaction(ball1, ball2) {
@@ -81,6 +91,7 @@ function loop() {
     //update balls
     for (let index = 0; index < balls.length; index++) {
         balls[index].move(width, height)
+        balls[index].progressDisease()
     }
 
     // check for intersection
