@@ -20,8 +20,6 @@ class Ball {
         this.direction = Math.random() * Math.PI * 2;
         this.x = randomNumber(10, width - 10);
         this.y = randomNumber(10, height - 10);
-        // this.x = width / 2;
-        // this.y = height / 2;
         this.dx = Math.cos(this.direction) * this.speed
         this.dy = Math.sin(this.direction) * this.speed
         this.state = "suceptible"
@@ -53,9 +51,20 @@ class Ball {
             this.dy = -this.dy
         }
     }
+    intersects(ball) {
+        let d = Math.hypot(this.x - ball.x, this.y - ball.y)
+        return Boolean(d < this.radius * 2)
+    }
 }
 
-
+function interaction(ball1, ball2) {
+    if (ball1.state == "infected" && ball2.state == "suceptible") {
+        infect(ball2)
+    }
+    if (ball2.state == "infected" && ball1.state == "suceptible") {
+        infect(ball1)
+    }
+}
 
 function infect(ball) {
     ball.state = "infected"
@@ -72,7 +81,15 @@ function loop() {
     //update balls
     for (let index = 0; index < balls.length; index++) {
         balls[index].move(width, height)
-
+    }
+    // check for intersection
+    for (var i = 0; i < n_balls; i++) {
+        for (var j = i + 1; j < n_balls; j++) {
+            if (balls[i].intersects(balls[j])) {
+                // console.log(i + "intersects with" + j)
+                interaction(balls[i], balls[j])
+            }
+        }
     }
     // draw balls
     for (let index = 0; index < balls.length; index++) {
