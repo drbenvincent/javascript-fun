@@ -8,16 +8,24 @@ canvas.width = width;
 
 var context = document.querySelector("canvas").getContext("2d");
 
+function randomNumber(start, end) {
+    var diff = end - start;
+    return Math.random() * diff + start;
+}
+
 class Ball {
-    constructor(x, y, radius) {
-        this.color = "#008000";
-        this.radius = radius;
-        this.speed = Math.random() * 2 + 0.1;
+    constructor() {
+        this.radius = 5;
+        this.speed = Math.random() * 1.0 + 0.0;
         this.direction = Math.random() * Math.PI * 2;
-        this.x = x;
-        this.y = y;
+        this.x = randomNumber(10, width - 10);
+        this.y = randomNumber(10, height - 10);
+        // this.x = width / 2;
+        // this.y = height / 2;
         this.dx = Math.cos(this.direction) * this.speed
         this.dy = Math.sin(this.direction) * this.speed
+        this.state = "suceptible"
+        this.color = "#008000";
     }
     draw() {
         context.fillStyle = this.color;
@@ -47,6 +55,13 @@ class Ball {
     }
 }
 
+
+
+function infect(ball) {
+    ball.state = "infected"
+    ball.color = "red"
+}
+
 function loop() {
     window.requestAnimationFrame(loop)
 
@@ -63,8 +78,6 @@ function loop() {
     for (let index = 0; index < balls.length; index++) {
         balls[index].draw()
     }
-    // ball.move(width, height)
-    // ball.draw()
 
     // update text
     document.getElementById("message_id").innerText = "N = " + n_balls;
@@ -73,7 +86,10 @@ function loop() {
 // Create many balls
 var balls = new Array();
 for (let index = 0; index < n_balls; index++) {
-    balls.push(new Ball(100, 100, 5))
+    balls.push(new Ball())
 }
+
+// one initial infected ball
+infect(balls[0])
 
 loop()
