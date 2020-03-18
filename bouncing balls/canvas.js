@@ -1,6 +1,9 @@
+let height = 400
+let width = 600
+
 var canvas = document.querySelector("canvas");
-canvas.height = 400;
-canvas.width = 600;
+canvas.height = height;
+canvas.width = width;
 
 var context = document.querySelector("canvas").getContext("2d");
 
@@ -43,21 +46,6 @@ class Ball {
     }
 }
 
-// get 
-//var message_thing = document.getElementsById("message_id")
-// make new ball
-var ball = new Ball(100, 100, 5);
-
-// draw ball
-// context.fillStyle = ball.color;
-// context.beginPath();
-// context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-// context.fill();
-//ball.draw()
-
-let height = 400
-let width = 600
-
 function loop() {
     window.requestAnimationFrame(loop)
 
@@ -71,5 +59,7 @@ function loop() {
     // update text
     document.getElementById("message_id").innerText = "ball.x = " + ball.x;
 }
+
+var ball = new Ball(100, 100, 5);
 
 loop()
