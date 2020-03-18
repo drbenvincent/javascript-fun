@@ -56,8 +56,8 @@ class Ball {
         return Boolean(d < this.radius * 2)
     }
     infected() {
-        ball.state = "infected"
-        ball.color = "red"
+        this.state = "infected"
+        this.color = "red"
     }
 }
 
