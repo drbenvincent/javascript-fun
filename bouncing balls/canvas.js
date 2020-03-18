@@ -1,6 +1,12 @@
-let height = 400
-let width = 600
-let n_balls = 500
+// SIMULATION OPTIONS
+let height = 500
+let width = 800
+let n_balls = 250
+
+// Overall status counts
+let n_susceptible = n_balls
+let n_infected = 0
+let n_recovered = 0
 
 var canvas = document.querySelector("canvas");
 canvas.height = height;
@@ -15,8 +21,8 @@ function randomNumber(start, end) {
 
 class Ball {
     constructor() {
-        this.radius = 3;
-        this.speed = Math.random() * 0.5 + 0.0;
+        this.radius = 4;
+        this.speed = Math.random() * 0.7 + 0.0;
         this.direction = Math.random() * Math.PI * 2;
         this.x = randomNumber(10, width - 10);
         this.y = randomNumber(10, height - 10);
@@ -58,16 +64,20 @@ class Ball {
     infected() {
         this.state = "infected"
         this.color = "red"
+        n_infected += 1
+        n_susceptible -= 1
     }
     progressDisease() {
         if (this.state == "infected" && Math.random() < 0.001) {
-            console.log("recovered")
+            // console.log("recovered")
             this.recovers()
         }
     }
     recovers() {
         this.state = "recovered"
         this.color = "green"
+        n_recovered += 1
+        n_infected -= 1
     }
 }
 
@@ -110,7 +120,7 @@ function loop() {
     }
 
     // update text
-    document.getElementById("message_id").innerText = "N = " + n_balls;
+    document.getElementById("message_id").innerText = "S = " + n_susceptible + "; I = " + n_infected + "; R = " + n_recovered;
 }
 
 // Create many balls
