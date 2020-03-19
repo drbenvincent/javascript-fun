@@ -14,10 +14,12 @@ canvas.width = width;
 
 var context = document.querySelector("canvas").getContext("2d");
 
+
 function randomNumber(start, end) {
     var diff = end - start;
     return Math.random() * diff + start;
 }
+
 
 class Ball {
     constructor() {
@@ -81,12 +83,47 @@ class Ball {
     }
 }
 
-function interaction(ball1, ball2) {
-    if (ball1.state == "infected" && ball2.state == "suceptible") {
-        ball2.infected()
+
+class Population {
+    constructor(n_balls) {
+        this.n_balls = n_balls;
+        // create balls
+        this.balls = new Array();
+        for (let index = 0; index < this.n_balls; index++) {
+            this.balls.push(new Ball())
+        }
+        // infect patient zero
+        this.balls[0].infected()
     }
-    if (ball2.state == "infected" && ball1.state == "suceptible") {
-        ball1.infected()
+    update() {
+        // move and progress disease
+        for (let index = 0; index < this.n_balls; index++) {
+            this.balls[index].move(width, height)
+            this.balls[index].progressDisease()
+        }
+
+        // check for intersection
+        for (var i = 0; i < this.n_balls; i++) {
+            for (var j = i + 1; j < this.n_balls; j++) {
+                if (this.balls[i].intersects(this.balls[j])) {
+                    // console.log(i + "intersects with" + j)
+                    this.interaction(i, j)
+                }
+            }
+        }
+    }
+    draw() {
+        for (let index = 0; index < this.n_balls; index++) {
+            this.balls[index].draw()
+        }
+    }
+    interaction(i, j) {
+        if (this.balls[i].state == "infected" && this.balls[j].state == "suceptible") {
+            this.balls[j].infected()
+        }
+        if (this.balls[j].state == "infected" && this.balls[i].state == "suceptible") {
+            this.balls[i].infected()
+        }
     }
 }
 
@@ -98,38 +135,14 @@ function loop() {
     context.canvas.height = height;
     context.canvas.width = width;
 
-    //update balls
-    for (let index = 0; index < balls.length; index++) {
-        balls[index].move(width, height)
-        balls[index].progressDisease()
-    }
-
-    // check for intersection
-    for (var i = 0; i < n_balls; i++) {
-        for (var j = i + 1; j < n_balls; j++) {
-            if (balls[i].intersects(balls[j])) {
-                // console.log(i + "intersects with" + j)
-                interaction(balls[i], balls[j])
-            }
-        }
-    }
-
-    // draw balls
-    for (let index = 0; index < balls.length; index++) {
-        balls[index].draw()
-    }
+    population.update();
+    population.draw();
 
     // update text
     document.getElementById("message_id").innerText = "S = " + n_susceptible + "; I = " + n_infected + "; R = " + n_recovered;
 }
 
-// Create many balls
-var balls = new Array();
-for (let index = 0; index < n_balls; index++) {
-    balls.push(new Ball())
-}
 
-// one initial infected ball
-balls[0].infected()
+population = new Population(n_balls);
 
 loop()
