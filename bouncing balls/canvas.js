@@ -129,7 +129,10 @@ class Population {
 
 
 function loop() {
-    window.requestAnimationFrame(loop)
+    if (n_infected != 0) {
+        window.requestAnimationFrame(loop)
+    }
+
 
     // redraw/wipe canvas
     context.canvas.height = height;
